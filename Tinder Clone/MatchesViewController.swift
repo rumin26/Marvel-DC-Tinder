@@ -11,26 +11,134 @@ import Parse
 
 class MatchesViewController: UIViewController {
     @IBOutlet weak var imgView_match: UIImageView!
-
+    var displayedUserId = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
+        
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(self.wasDragged(gestureRecognizer:)))
+        
+        imgView_match.isUserInteractionEnabled = true
+        
+        imgView_match.addGestureRecognizer(gesture)
+        
+        changeMatch()
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
+        
+        let translation = gestureRecognizer.translation(in: view)
+        let imgView = gestureRecognizer.view!
+        
+        imgView.center = CGPoint(x: self.view.bounds.width / 2 + translation.x, y: self.view.bounds.height / 2 + translation.y)
+        
+        let xFromCenter = imgView.center.x - self.view.bounds.width / 2
+        
+        var rotation = CGAffineTransform(rotationAngle: xFromCenter / 200)
+        
+        imgView.transform = rotation
+        
+        var swipe = ""
+        
+        if gestureRecognizer.state == UIGestureRecognizerState.ended {
+            
+            if imgView.center.x < 100 {
+                
+                //print("Not chosen")
+                swipe = "rejectedUsers"
+                
+                
+            } else if imgView.center.x > self.view.bounds.width - 100 {
+                
+                //print("Chosen")
+                swipe = "acceptedUsers"
+                
+                
+            }
+            
+            PFUser.current()?.addUniqueObject(displayedUserId, forKey: swipe)
+            PFUser.current()?.saveInBackground(block: { (success, error) in
+                
+                if success
+                {
+                    self.changeMatch()
+                }
+            })
+            
+            
+            rotation = CGAffineTransform(rotationAngle: 0)
+            imgView.transform = rotation
+            imgView.center = CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2)
+            
+        }
+        
+    }
+
+    
+
+    func changeMatch()
+    {
         let lookingFor = PFUser.current()?["lookingFor"]
         if let userLooingFor = lookingFor
         {
             let userLookingFor = userLooingFor as! String
             if userLookingFor == "Woman"
             {
+                var arr_swipedUsers = [""]
+                
+                if let arr_acceptedUsers = PFUser.current()?["acceptedUsers"]
+                {
+                    arr_swipedUsers = arr_acceptedUsers as! Array
+                }
+                
+                if let arr_rejectedUsers = PFUser.current()?["rejectedUsers"]
+                {
+                    arr_swipedUsers.append(contentsOf: arr_rejectedUsers as! Array)
+                }
+                
+                
                 let query = PFQuery(className: "_User")
                 query.whereKey("gender", equalTo: "Woman")
+                query.whereKey("objectId", notContainedIn: arr_swipedUsers)
+                
                 query.findObjectsInBackground(block: { (objects, error) in
+                query.limit = 1
+                    
+                    
                     
                     if objects != nil
                     {
+                        if objects?.count == 0
+                        {
+                            
+                            let alert = UIAlertController(title: "All Users Swiped!!", message: "Come back again later!!", preferredStyle: .alert)
+                            alert.addAction(.init(title: "Okay", style: .default, handler: { (action) in
+                                self.dismiss(animated: true, completion: nil)
+                                
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                         for women in objects!
                         {
-                            print(women)
+                            let image = women.object(forKey: "userImage") as! PFFile
+                            self.displayedUserId = women.objectId!
+                            
+                            image.getDataInBackground(block: { (data, error) in
+                                
+                                if data != nil
+                                {
+                                    self.imgView_match.image = UIImage(data: data!)
+                                }
+                            })
                         }
                     }
                     else
@@ -49,15 +157,51 @@ class MatchesViewController: UIViewController {
             }
             else
             {
+                var arr_swipedUsers = [""]
+                
+                if let arr_acceptedUsers = PFUser.current()?["acceptedUsers"]
+                {
+                    arr_swipedUsers = arr_acceptedUsers as! Array
+                }
+                
+                if let arr_rejectedUsers = PFUser.current()?["rejectedUsers"]
+                {
+                    arr_swipedUsers.append(contentsOf: arr_rejectedUsers as! Array)
+                }
+                
+                
                 let query = PFQuery(className: "_User")
                 query.whereKey("gender", equalTo: "Man")
+                query.whereKey("objectId", notContainedIn: arr_swipedUsers)
+                
                 query.findObjectsInBackground(block: { (objects, error) in
+                query.limit = 1
                     
                     if objects != nil
                     {
+                        if objects?.count == 0
+                        {
+                            
+                            let alert = UIAlertController(title: "All Users Swiped!!", message: "Come back again later!!", preferredStyle: .alert)
+                            alert.addAction(.init(title: "Okay", style: .default, handler: { (action) in
+                                self.dismiss(animated: true, completion: nil)
+                                
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        
                         for men in objects!
                         {
-                            print(men)
+                            let image = men.object(forKey: "userImage") as! PFFile
+                            self.displayedUserId = men.objectId!
+                            
+                            image.getDataInBackground(block: { (data, error) in
+                                
+                                if data != nil
+                                {
+                                    self.imgView_match.image = UIImage(data: data!)
+                                }
+                            })
                         }
                     }
                     else
@@ -75,26 +219,7 @@ class MatchesViewController: UIViewController {
                 })
             }
         }
-        
-        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func btnLogoutPressed(_ sender: Any) {
         PFUser.logOutInBackground { (error) in
             
