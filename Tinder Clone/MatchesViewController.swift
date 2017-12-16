@@ -97,12 +97,12 @@ class MatchesViewController: UIViewController {
                 
                 if let arr_acceptedUsers = PFUser.current()?["acceptedUsers"]
                 {
-                    arr_swipedUsers = arr_acceptedUsers as! Array
+                    arr_swipedUsers += arr_acceptedUsers as! Array
                 }
                 
                 if let arr_rejectedUsers = PFUser.current()?["rejectedUsers"]
                 {
-                    arr_swipedUsers.append(contentsOf: arr_rejectedUsers as! Array)
+                    arr_swipedUsers += arr_rejectedUsers as! Array
                 }
                 
                 
@@ -161,12 +161,12 @@ class MatchesViewController: UIViewController {
                 
                 if let arr_acceptedUsers = PFUser.current()?["acceptedUsers"]
                 {
-                    arr_swipedUsers = arr_acceptedUsers as! Array
+                    arr_swipedUsers += arr_acceptedUsers as! Array
                 }
                 
                 if let arr_rejectedUsers = PFUser.current()?["rejectedUsers"]
                 {
-                    arr_swipedUsers.append(contentsOf: arr_rejectedUsers as! Array)
+                    arr_swipedUsers += arr_rejectedUsers as! Array
                 }
                 
                 
@@ -219,6 +219,13 @@ class MatchesViewController: UIViewController {
                 })
             }
         }
+    }
+    
+    @IBAction func btnMatchesPressed(_ sender: Any) {
+        
+    }
+    @IBAction func btnUserDetailsPressed(_ sender: Any) {
+        
     }
     @IBAction func btnLogoutPressed(_ sender: Any) {
         PFUser.logOutInBackground { (error) in

@@ -18,7 +18,12 @@
 		1F376A331FE08F2800511DD5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F376A321FE08F2800511DD5 /* libsqlite3.tbd */; };
 		1F376A461FE0903500511DD5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F376A441FE0903500511DD5 /* Bolts.framework */; };
 		1F376A471FE0903500511DD5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F376A451FE0903500511DD5 /* Parse.framework */; };
+		1F47EDF41FE48C2C00014933 /* MatchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47EDF31FE48C2C00014933 /* MatchesTableViewCell.swift */; };
+		1F47EDFB1FE4A3D600014933 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47EDFA1FE4A3D600014933 /* ChatViewController.swift */; };
+		1F47EE001FE4B6B700014933 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47EDFE1FE4B6B700014933 /* ChatTableViewCell.swift */; };
+		1F47EE011FE4B6B700014933 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F47EDFF1FE4B6B700014933 /* ChatTableViewCell.xib */; };
 		1F5E9DF31FE0C41E00FFC959 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E9DF21FE0C41E00FFC959 /* SignUpViewController.swift */; };
+		1FC218BD1FE46C9B001A5EF1 /* MatchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC218BC1FE46C9B001A5EF1 /* MatchesTableViewController.swift */; };
 		1FD69F7E1FE0E3EB00DE7F14 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD69F7D1FE0E3EB00DE7F14 /* UserDetailsViewController.swift */; };
 		1FD69F811FE0E5B000DE7F14 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD69F801FE0E5B000DE7F14 /* person.png */; };
 /* End PBXBuildFile section */
@@ -37,7 +42,12 @@
 		1F376A321FE08F2800511DD5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		1F376A441FE0903500511DD5 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Parse/Bolts.framework; sourceTree = SOURCE_ROOT; };
 		1F376A451FE0903500511DD5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Parse/Parse.framework; sourceTree = SOURCE_ROOT; };
+		1F47EDF31FE48C2C00014933 /* MatchesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewCell.swift; sourceTree = "<group>"; };
+		1F47EDFA1FE4A3D600014933 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		1F47EDFE1FE4B6B700014933 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		1F47EDFF1FE4B6B700014933 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
 		1F5E9DF21FE0C41E00FFC959 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		1FC218BC1FE46C9B001A5EF1 /* MatchesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewController.swift; sourceTree = "<group>"; };
 		1FD69F7D1FE0E3EB00DE7F14 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		1FD69F801FE0E5B000DE7F14 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = person.png; path = Images/person.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +95,11 @@
 				1F5E9DF21FE0C41E00FFC959 /* SignUpViewController.swift */,
 				1FD69F7D1FE0E3EB00DE7F14 /* UserDetailsViewController.swift */,
 				1F1B41B71FE304DB008B5D9F /* MatchesViewController.swift */,
+				1FC218BC1FE46C9B001A5EF1 /* MatchesTableViewController.swift */,
+				1F47EDF31FE48C2C00014933 /* MatchesTableViewCell.swift */,
+				1F47EDFA1FE4A3D600014933 /* ChatViewController.swift */,
+				1F47EDFE1FE4B6B700014933 /* ChatTableViewCell.swift */,
+				1F47EDFF1FE4B6B700014933 /* ChatTableViewCell.xib */,
 				1F376A1A1FE08E5C00511DD5 /* Main.storyboard */,
 				1F376A1D1FE08E5C00511DD5 /* Assets.xcassets */,
 				1F376A1F1FE08E5C00511DD5 /* LaunchScreen.storyboard */,
@@ -181,6 +196,7 @@
 			files = (
 				1FD69F811FE0E5B000DE7F14 /* person.png in Resources */,
 				1F376A211FE08E5C00511DD5 /* LaunchScreen.storyboard in Resources */,
+				1F47EE011FE4B6B700014933 /* ChatTableViewCell.xib in Resources */,
 				1F376A1E1FE08E5C00511DD5 /* Assets.xcassets in Resources */,
 				1F376A1C1FE08E5C00511DD5 /* Main.storyboard in Resources */,
 			);
@@ -195,8 +211,12 @@
 			files = (
 				1F5E9DF31FE0C41E00FFC959 /* SignUpViewController.swift in Sources */,
 				1F376A191FE08E5C00511DD5 /* ViewController.swift in Sources */,
+				1FC218BD1FE46C9B001A5EF1 /* MatchesTableViewController.swift in Sources */,
+				1F47EE001FE4B6B700014933 /* ChatTableViewCell.swift in Sources */,
 				1F1B41B81FE304DB008B5D9F /* MatchesViewController.swift in Sources */,
 				1FD69F7E1FE0E3EB00DE7F14 /* UserDetailsViewController.swift in Sources */,
+				1F47EDF41FE48C2C00014933 /* MatchesTableViewCell.swift in Sources */,
+				1F47EDFB1FE4A3D600014933 /* ChatViewController.swift in Sources */,
 				1F376A171FE08E5C00511DD5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
