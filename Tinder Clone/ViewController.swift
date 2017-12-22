@@ -16,6 +16,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if (PFUser.current() != nil)
+        {
+            self.performSegue(withIdentifier: "showMatchAfterLogin", sender: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

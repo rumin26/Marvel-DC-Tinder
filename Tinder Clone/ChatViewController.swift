@@ -135,10 +135,14 @@ class ChatViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     
                 }
                 self.tbl_chat.reloadData()
-                let lastRowNumber = self.tbl_chat.numberOfRows(inSection: 0) - 1
                 
-                let ip = IndexPath(row: lastRowNumber, section: 0)
-                self.tbl_chat.scrollToRow(at: ip, at: .top, animated: true)
+                if self.arr_messages.count > 0
+                {
+                    let lastRowNumber = self.tbl_chat.numberOfRows(inSection: 0) - 1
+                
+                    let ip = IndexPath(row: lastRowNumber, section: 0)
+                    self.tbl_chat.scrollToRow(at: ip, at: .top, animated: true)
+                }
             }
         }
     }

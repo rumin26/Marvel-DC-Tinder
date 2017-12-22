@@ -27,36 +27,84 @@ class MatchesTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         //self.tableView = UITableView(frame:CGRect(x: 0, y: 68, width: self.view.frame.size.width, height: self.view.frame.size.height))
         
-        let acceptedUsers = PFUser.current()?["acceptedUsers"] as! Array<Any>
+        self.tbl_matches.frame = CGRect(x: 0, y: 50, width: self.view.frame.size.width, height: self.view.frame.size.height)
         
-        for user in acceptedUsers{
+        if let array = PFUser.current()?["matchedUsers"]
+        {
+            let matchedUsers = array as! NSArray
             
-            let objectId = user
-            let query = PFQuery(className: "_User")
-            query.whereKey("objectId", equalTo: objectId)
-            
-            query.findObjectsInBackground(block: { (objects, error) in
-                
-                if objects != nil
-                {
-                    for acceptedUser in objects!
+            for matchUser in matchedUsers
+            {
+                let query = PFQuery(className: "_User")
+                query.whereKey("objectId", equalTo: matchUser)
+                query.findObjectsInBackground(block: { (objects, error) in
+                    
+                    if objects != nil
                     {
-                        
-                        self.arr_acceptedUsers.append(acceptedUser)
-                        self.arr_userNames.append(acceptedUser.object(forKey: "username")!)
-                        self.arr_userIds.append(acceptedUser.objectId!)
-                        self.arr_userImages.append(acceptedUser.object(forKey: "userImage") as! PFFile)
-                        
-                        
+                        for match in objects!
+                        {
+                            self.arr_acceptedUsers.append(match)
+                            self.arr_userNames.append(match.object(forKey: "username")!)
+                            self.arr_userIds.append(match.objectId!)
+                            self.arr_userImages.append(match.object(forKey: "userImage") as! PFFile)
+                        }
                     }
-                    self.tbl_matches.reloadData()
-                }
+                    
+                })
                 
-            })
+            }
         }
         
-        
+        let query = PFQuery(className: "_User")
+        query.whereKey("matchedUsers", contains: (PFUser.current()?.objectId!)!)
+        query.findObjectsInBackground { (objects, error) in
+            
+            if objects != nil
+            {
+                if (objects?.count)! > 0
+                {
+                    for match in objects!
+                    {
+                        let objectId = match.objectId
+                        let query = PFQuery(className: "_User")
+                        query.whereKey("objectId", equalTo: objectId!)
+                        
+                        query.findObjectsInBackground(block: { (objects, error) in
+                            
+                            if objects != nil
+                            {
+                                for acceptedUser in objects!
+                                {
+                                    
+                                    self.arr_acceptedUsers.append(acceptedUser)
+                                    self.arr_userNames.append(acceptedUser.object(forKey: "username")!)
+                                    self.arr_userIds.append(acceptedUser.objectId!)
+                                    self.arr_userImages.append(acceptedUser.object(forKey: "userImage") as! PFFile)
+                                    
+                                    
+                                }
+                                self.tbl_matches.reloadData()
+                            }
+
+                        })
+                    }
+                }
+                else
+                {
+                    let alert = UIAlertController(title: "No Matches Yet", message: "Come back when you match with someone", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Okay", style: .default, handler: { (action) in
+                        
+                        self.navigationController?.popViewController(animated: true)
+                        
+                    })
+                    
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

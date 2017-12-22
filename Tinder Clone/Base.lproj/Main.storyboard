@@ -187,7 +187,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FWi-X9-aRg" id="ZOe-PV-6iC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="94.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQx-Ki-MrQ">
@@ -215,7 +215,6 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tbl_matches" destination="OmB-Bg-eof" id="xRX-aS-eFr"/>
@@ -270,7 +269,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Your Details"/>
                                 <connections>
-                                    <action selector="btnUserDetailsPressed:" destination="Emi-9I-Qlg" eventType="touchUpInside" id="F4Q-aU-KCI"/>
                                     <segue destination="5FE-CB-HzD" kind="show" id="vND-fH-5gx"/>
                                 </connections>
                             </button>
@@ -279,7 +277,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Matches"/>
                                 <connections>
-                                    <action selector="btnMatchesPressed:" destination="Emi-9I-Qlg" eventType="touchUpInside" id="k9I-Bk-nYv"/>
                                     <segue destination="bp6-gP-2Tz" kind="show" id="kyg-A5-xZJ"/>
                                 </connections>
                             </button>

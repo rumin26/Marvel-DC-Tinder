@@ -24,8 +24,8 @@ class MatchesViewController: UIViewController {
         imgView_match.isUserInteractionEnabled = true
         
         imgView_match.addGestureRecognizer(gesture)
-        
-        changeMatch()
+    
+        self.changeMatch()
         
     }
 
@@ -53,16 +53,13 @@ class MatchesViewController: UIViewController {
             
             if imgView.center.x < 100 {
                 
-                //print("Not chosen")
                 swipe = "rejectedUsers"
-                
+            
                 
             } else if imgView.center.x > self.view.bounds.width - 100 {
                 
-                //print("Chosen")
                 swipe = "acceptedUsers"
-                
-                
+        
             }
             
             PFUser.current()?.addUniqueObject(displayedUserId, forKey: swipe)
@@ -70,7 +67,71 @@ class MatchesViewController: UIViewController {
                 
                 if success
                 {
-                    self.changeMatch()
+                    let query = PFQuery(className: "_User")
+                    query.whereKey("acceptedUsers", contains: PFUser.current()?.objectId)
+                    query.whereKey("objectId", equalTo: self.displayedUserId)
+                    query.findObjectsInBackground(block: { (object, error) in
+                    
+                        if object != nil
+                        {
+                            if (object?.count)! > 0
+                            {
+                                for user in object!
+                                {
+                                    let string = "You matched with " + (user.object(forKey: "username") as! String) + "!"
+                                    PFUser.current()?.addUniqueObject(self.displayedUserId, forKey: "matchedUsers")
+                                    PFUser.current()?.saveInBackground(block: { (success, error) in
+                                        
+                                        if success
+                                        {
+                                            let query = PFQuery(className: "_User")
+                                            query.whereKey("objectId", equalTo: self.displayedUserId)
+                                            query.findObjectsInBackground(block: { (object, error) in
+                                                
+                                                if object != nil
+                                                {
+                                                    for user in object!
+                                                    {
+//                                                        user.addUniqueObject((PFUser.current()?.objectId!)!, forKey: "matchedUsers")
+//                                                        user.saveInBackground(block: { (success, error) in
+//                                                            
+//                                                            if success
+//                                                            {
+                                                                let alert = UIAlertController(title: "It's a Match!!", message: string, preferredStyle: .alert)
+                                                                alert.addAction(.init(title: "Okay", style: .default, handler: { (action) in
+                                                                    
+                                                                        
+                                                                        self.changeMatch()
+                                                                        
+                                                                   
+                                                                    
+                                                                }))
+                                                                self.present(alert, animated: true, completion: nil)
+//                                                            }
+//                                                            
+//                                                        })
+                                                    }
+                                                    
+                                                }
+                                                
+                                            })
+                                            
+                                            
+                                        }
+                                    })
+                                    
+                                }
+                            }
+                            else
+                            {
+                                self.changeMatch()
+                            }
+                            
+                        }
+                        
+                        
+                    })
+                    
                 }
             })
             
@@ -221,12 +282,7 @@ class MatchesViewController: UIViewController {
         }
     }
     
-    @IBAction func btnMatchesPressed(_ sender: Any) {
-        
-    }
-    @IBAction func btnUserDetailsPressed(_ sender: Any) {
-        
-    }
+    
     @IBAction func btnLogoutPressed(_ sender: Any) {
         PFUser.logOutInBackground { (error) in
             
